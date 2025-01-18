@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://noobctfer.github.io/2025/01/17/escapeTwo-writeup/</loc>
+    
+    <lastmod>2025-01-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://noobctfer.github.io/2024/12/19/encoDecept-writeup/</loc>
     
     <lastmod>2024-12-19</lastmod>
@@ -121,7 +130,7 @@
 
   <url>
     <loc>https://noobctfer.github.io/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -131,28 +140,35 @@
   
   <url>
     <loc>https://noobctfer.github.io/categories/htb-challenge/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://noobctfer.github.io/categories/resources/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://noobctfer.github.io/categories/htb-machine/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://noobctfer.github.io/categories/university-CTF-2024/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://noobctfer.github.io/categories/htb-machine-windows/</loc>
+    <lastmod>2025-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
